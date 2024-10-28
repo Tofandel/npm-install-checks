@@ -1,5 +1,6 @@
 const t = require('tap')
 const { checkPlatform } = require('..')
+const process = require('node:process')
 
 t.test('target cpu wrong', async t =>
   t.throws(() => checkPlatform({
@@ -106,6 +107,7 @@ t.test('libc', (t) => {
   let REPORT = {}
   const _processReport = process.report.getReport
   process.report.getReport = () => REPORT
+  process.report.forceCheck = true
 
   t.teardown(() => {
     Object.defineProperty(process, 'platform', _processPlatform)
